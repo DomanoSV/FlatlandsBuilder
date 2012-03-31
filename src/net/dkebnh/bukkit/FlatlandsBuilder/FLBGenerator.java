@@ -19,7 +19,11 @@ public class FLBGenerator extends ChunkGenerator{
 	}
 	
 	public List<BlockPopulator> getDefaultPopulators(World world){
-		return new ArrayList<BlockPopulator>();
+		ArrayList<BlockPopulator> populators = new ArrayList<BlockPopulator>();
+		
+		populators.add(new FLBPopulator());
+		
+		return populators;
 	}
 	
 	public Location getFixedSpawnLocation(World world, Random random){
@@ -44,8 +48,8 @@ public class FLBGenerator extends ChunkGenerator{
 
 				blocks[this.coordsToInt(x, 15, z)] = (byte) Material.WOOL.getId();
 			}
-			}
+		}
 		
-			return blocks;
+	return blocks;
 	}
 }

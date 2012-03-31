@@ -10,17 +10,17 @@ public class BuilderFL extends JavaPlugin {
 	
 	private Logger log = Logger.getLogger("Minecraft");
 	
+	public void logMessage(String msg){
+		PluginDescriptionFile pdFile = this.getDescription();
+		this.log.info(pdFile.getName() + " " + pdFile.getVersion() + " - " + msg);
+	}
+	
 	public void onEnable(){
 		this.logMessage("Enabled."); 		
 	}
 	
 	public void onDisable(){
 		this.logMessage("Disabled."); 
-	}
-	
-	public void logMessage(String msg){
-		PluginDescriptionFile pdFile = this.getDescription();
-		this.log.info(pdFile.getName() + " " + pdFile.getVersion() + " - " + msg);
 	}
 	
 	public ChunkGenerator getDefaultWorldGenerator(String worldName, String uid){
