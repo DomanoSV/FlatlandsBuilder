@@ -1,3 +1,4 @@
 name: FlatlandsBuilder
-version: 0.1a
+version: 0.1
 main: net.dkebnh.bukkit.FlatlandsBuilder.BuilderFL
+loadbefore: [Multiverse-Core, Multiverse-Portals]
