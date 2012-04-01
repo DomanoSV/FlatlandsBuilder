@@ -1,9 +1,0 @@
-name: FlatlandsBuilder
-version: 0.2b
-description: This enerates a Flatlands World with borders around the chunk.
-author: DomanoSV
-website: http://www.dkebnh.net/
-
-main: net.dkebnh.bukkit.FlatlandsBuilder.BuilderFL
-load: STARTUP
-loadbefore: [Multiverse-Core, Multiverse-Portals]
