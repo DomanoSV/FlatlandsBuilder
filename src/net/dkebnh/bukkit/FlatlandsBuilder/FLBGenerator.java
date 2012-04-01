@@ -20,7 +20,7 @@ public class FLBGenerator extends ChunkGenerator{
 	private String borderBblock;
 	
 	public FLBGenerator(){
-		this("64,wool:15,wool:8");
+		this("64,wool:15,wool:7");
 	}
 	
 	public FLBGenerator(String id){
@@ -40,21 +40,27 @@ public class FLBGenerator extends ChunkGenerator{
 						fillblock = tokens[1];
 						borderAblock = tokens[2];
 						borderBblock = null;
+					}else {
+						log.info("[FlatlandsBuilder] Invalid Settings provided, using defaults '64,wool:15,wool:7'");
+			            height = 64;
+			            fillblock = "wool:15";
+						borderAblock = "wool:7";
+						borderBblock = null;
 					}
 				}
 			} catch (Exception e){
-				log.severe("[FlatlandsBuilder] Error parsing FlatlandsBuilder Settings '" + id + "'. using defaults '64,wool:15,wool:8': " + e.toString());
+				log.severe("[FlatlandsBuilder] Error parsing FlatlandsBuilder Settings '" + id + "'. using defaults '64,wool:15,wool:7': " + e.toString());
                 e.printStackTrace();
                 height = 64;
                 fillblock = "wool:15";
-				borderAblock = "wool:8";
+				borderAblock = "wool:7";
 				borderBblock = null;
 			}
 		} else {
-			log.info("[FlatlandsBuilder] No Settings provided, using defaults 64,wool:15,wool:8");
+			log.info("[FlatlandsBuilder] No Settings provided, using defaults '64,wool:15,wool:7'");
             height = 64;
             fillblock = "wool:15";
-			borderAblock = "wool:8";
+			borderAblock = "wool:7";
 			borderBblock = null;
 		}
 	}

@@ -16,4 +16,7 @@ Supports data values of block ids by use of ':' between them ie. 'wool:8'. Numer
 
 > To gen a flatlands world with multiverse:
 /mv create [WorldName] NORMAL -g FlatlandsBuilder:Height,FillBlock,BorderBlock
-ie.	/mv create [WorldName] NORMAL -g FlatlandsBuilder:16,wool:15,wool:8
+ie.	/mv create [WorldName] NORMAL -g FlatlandsBuilder:16,wool:15,wool:7
+
+Any bugs please send a bug report to support@dkebnh.net and I will fix it a soon as
+possible ;)
