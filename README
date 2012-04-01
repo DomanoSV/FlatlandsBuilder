@@ -15,5 +15,5 @@ Supports arbitrary height worlds, max height of 128 blocks only at the moment.
 Supports data values of block ids by use of ':' between them ie. 'wool:8'. Numeric IDs only.
 
 > To gen a flatlands world with multiverse:
-		/mv create [WorldName] NORMAL -g FlatlandsBuilder:Height,FillBlock,BorderBlock
-ie.		/mv create [WorldName] NORMAL -g FlatlandsBuilder:16,wool:15,wool:8
+/mv create [WorldName] NORMAL -g FlatlandsBuilder:Height,FillBlock,BorderBlock
+ie.	/mv create [WorldName] NORMAL -g FlatlandsBuilder:16,wool:15,wool:8
