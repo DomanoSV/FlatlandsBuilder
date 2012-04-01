@@ -23,9 +23,8 @@ public class BuilderFL extends JavaPlugin {
 		this.logMessage("Disabled."); 
 	}
 	
-	public ChunkGenerator getDefaultWorldGenerator(String worldName, String uid){
-		return new FLBGenerator(this);
-		
+	public ChunkGenerator getDefaultWorldGenerator(String worldName, String id){
+		return new FLBGenerator(id);
 	}
 	
 }
