@@ -1,8 +1,8 @@
 Version 1.0 Beta
 
 Hello this is a flatlands generator, best used with multiverse.
-http://img571.imageshack.us/img571/2871/flbgenerator.png
 works with CraftBukkit 1.2.4-R01
 http://www.dkebnh.net/wp-content/uploads/FlatlandsBuilder.jar
+Screenshots: http://img694.imageshack.us/img694/144/flbgenerator10beta.png
 
 > To gen a flatlands world with multiverse /mv create [WorldName] NORMAL -g FlatlandsBuilder
