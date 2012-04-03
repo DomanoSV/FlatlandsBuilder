@@ -1,4 +1,4 @@
 name: FlatlandsBuilder
-version: 0.3
+version: 0.5
 main: net.dkebnh.bukkit.FlatlandsBuilder.BuilderFL
 load: STARTUP
