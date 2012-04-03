@@ -19,49 +19,58 @@ public class FLBGenerator extends ChunkGenerator{
 	private String borderAblock;
 	private String borderBblock;
 	
+	public void setDefaults(String msg){
+        height = 64;
+        fillblock = "wool:15";
+		borderAblock = "wool:7";
+		borderBblock = null;
+		this.log.warning(msg);
+	}
+	
 	public FLBGenerator(){
 		this("64,wool:15,wool:7");
 	}
 	
 	public FLBGenerator(String id){
 		if (id != null){
-			try {
+			try{
 				if (id.length() > 0){
 					String tokens[] = id.split("[,]");
 					
 					if (tokens.length == 3){
 						height = Integer.parseInt(tokens[0]);
-						if (height <= 0 || height >= 128) // Will change max height later on, once sure 256 is the maximum value and not lower.
-                        {
-                            log.warning("[FlatlandsBuilder] Invalid height '" + tokens[0] + "'. Using 64 instead.");
-                            height = 64;
-                        } 
-						
+							if (height <= 0 || height >= 128){ // Will change max height later on, once sure 256 is the maximum value and not lower.
+								log.warning("[FlatlandsBuilder] Invalid height '" + tokens[0] + "'. Using 64 instead.");
+								height = 64;
+							} 
 						fillblock = tokens[1];
 						borderAblock = tokens[2];
 						borderBblock = null;
-					}else {
-						log.info("[FlatlandsBuilder] Invalid Settings provided, using defaults '64,wool:15,wool:7'");
-			            height = 64;
-			            fillblock = "wool:15";
-						borderAblock = "wool:7";
-						borderBblock = null;
-					}
-				}
-			} catch (Exception e){
-				log.severe("[FlatlandsBuilder] Error parsing FlatlandsBuilder Settings '" + id + "'. using defaults '64,wool:15,wool:7': " + e.toString());
-                e.printStackTrace();
-                height = 64;
-                fillblock = "wool:15";
-				borderAblock = "wool:7";
-				borderBblock = null;
-			}
-		} else {
-			log.info("[FlatlandsBuilder] No Settings provided, using defaults '64,wool:15,wool:7'");
+					}else{
+						if (tokens.length == 2){
+							height = Integer.parseInt(tokens[0]);
+								if (height <= 0 || height >= 128){ // Will change max height later on, once sure 256 is the maximum value and not lower.
+									log.warning("[FlatlandsBuilder] Invalid height '" + tokens[0] + "'. Using 64 instead.");
+									height = 64;
+							} 
+							fillblock = tokens[1];
+							borderAblock = tokens[1];
+							borderBblock = null;
+						}else{
+							this.setDefaults("[FlatlandsBuilder] Invalid Settings provided, using defaults '64,wool:15,wool:7'");
+						}
+					} 
+				} 
+			}catch (Exception e){
+			log.severe("[FlatlandsBuilder] Error parsing FlatlandsBuilder Settings '" + id + "'. using defaults '64,wool:15,wool:7': " + e.toString());
+            e.printStackTrace();
             height = 64;
             fillblock = "wool:15";
-			borderAblock = "wool:7";
+            borderAblock = "wool:7";
 			borderBblock = null;
+			}
+		}else{
+			this.setDefaults("[FlatlandsBuilder] No Settings provided, using defaults '64,wool:15,wool:7'");
 		}
 	}
 	
@@ -92,7 +101,7 @@ public class FLBGenerator extends ChunkGenerator{
 				for (y = 1; y < height; ++y){
 					blocks[this.coordsToInt(x, y, z)] = (byte) Material.STONE.getId();
 				}
-
+				
 				blocks[this.coordsToInt(x, height, z)] = (byte) Material.WOOL.getId();
 			}
 		}
