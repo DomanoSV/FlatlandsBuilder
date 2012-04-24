@@ -12,24 +12,15 @@ public class FLBPopulator extends BlockPopulator {
 	
 	private String genMode;
 	private int height;
-	private Material BlockA;
-	private Material BlockB;
-	private Material BlockC;
-	private byte BlockADV;
-	private byte BlockBDV;
-	private byte BlockCDV;
+	private Material BlockFLB[] = new Material[3];
+	private byte BlockFLBDV[] = new byte[3];
 
 	
-    protected FLBPopulator(int height, Material BlockA, Material BlockB, Material BlockC, byte BlockADV, byte BlockBDV, byte BlockCDV, String genMode){
+    protected FLBPopulator(int height, Material[] BlockFLB, byte[] BlockFLBDV, String genMode){
     	this.genMode = genMode;
         this.height = height;
-        this.BlockA = BlockA;
-        this.BlockB = BlockB;
-        this.BlockC = BlockC;
-        this.BlockADV = BlockADV;
-        this.BlockBDV = BlockBDV;
-        this.BlockCDV = BlockCDV;
-
+        this.BlockFLB = BlockFLB;
+        this.BlockFLBDV = BlockFLBDV;
     }
     
 	public void populate(World world, Random random, Chunk chunk) {
@@ -40,24 +31,23 @@ public class FLBPopulator extends BlockPopulator {
         	for(blockx2 = 0; blockx2 < 16; ++blockx2){
         		for(blockz2 = 0; blockz2 < 16; ++blockz2){
         			block = chunk.getBlock(blockx2, height, blockz2);	
-        			block.setType(BlockA);
-        			block.setData(BlockADV);
+        			block.setType(BlockFLB[0]);
+        			block.setData(BlockFLBDV[0]);
 				}
         	}
         }else if(genMode == "grid"){
         	for(blockx2 = 0; blockx2 < 16; ++blockx2){
         		for(blockz2 = 0; blockz2 < 16; ++blockz2){
         			block = chunk.getBlock(blockx2, height, blockz2);	
-        			block.setType(BlockA);
-        			block.setData(BlockADV);
+        			block.setType(BlockFLB[1]);
+        			block.setData(BlockFLBDV[1]);
 				}
         	}
         	for (blockx = 1; blockx < 15; ++blockx){
         		for (blockz = 1; blockz < 15; ++blockz){
         			block = chunk.getBlock(blockx, height, blockz);
-						
-        			block.setType(BlockB);
-        			block.setData(BlockBDV);
+        			block.setType(BlockFLB[0]);
+        			block.setData(BlockFLBDV[0]);
 				}
         	}
         }else if(genMode == "grid2"){
@@ -68,16 +58,16 @@ public class FLBPopulator extends BlockPopulator {
 		        for(blockx2 = 0; blockx2 < 16; ++blockx2){
 		        	for(blockz2 = 0; blockz2 < 16; ++blockz2){
 		        		block = chunk.getBlock(blockx2, height, blockz2);	
-		        		block.setType(BlockA);
-		        		block.setData(BlockADV);
+	        			block.setType(BlockFLB[1]);
+	        			block.setData(BlockFLBDV[1]);
 					}
 		        }
         	}else{
 		        for(blockx2 = 0; blockx2 < 16; ++blockx2){
 		        	for(blockz2 = 0; blockz2 < 16; ++blockz2){
 		        		block = chunk.getBlock(blockx2, height, blockz2);	
-		        		block.setType(BlockC);
-		        		block.setData(BlockCDV);
+	        			block.setType(BlockFLB[2]);
+	        			block.setData(BlockFLBDV[2]);
 					}
 		        }
         	} 
@@ -85,8 +75,8 @@ public class FLBPopulator extends BlockPopulator {
 			for(blockx = 1; blockx < 15; ++blockx){
         		for(blockz = 1; blockz < 15; ++blockz){
         			block = chunk.getBlock(blockx, height, blockz);
-        			block.setType(BlockB);
-        			block.setData(BlockBDV);
+        			block.setType(BlockFLB[0]);
+        			block.setData(BlockFLBDV[0]);
 				}
         	}
 		}
