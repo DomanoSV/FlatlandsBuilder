@@ -47,8 +47,8 @@ public class FLBGenerator extends ChunkGenerator{
 						height = 64;
 					} 
 					
-					if (tokens.length >= 1 && tokens.length <= 4){ // Will change max height later on, once sure 256 is the maximum value and not lower.
-
+					if (tokens.length >= 1 && tokens.length <= 4){
+					
                     for (int i = 1; i < tokens.length; i ++){
                     	int t = i - 1;
                         String materialTokens[] = tokens[i].split("[:]", 2);
