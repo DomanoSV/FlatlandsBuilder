@@ -47,6 +47,8 @@ public class FLBGenerator extends ChunkGenerator{
 						height = 64;
 					} 
 					
+					if (tokens.length >= 1 && tokens.length <= 4){ // Will change max height later on, once sure 256 is the maximum value and not lower.
+
                     for (int i = 1; i < tokens.length; i ++){
                     	int t = i - 1;
                         String materialTokens[] = tokens[i].split("[:]", 2);
@@ -80,18 +82,20 @@ public class FLBGenerator extends ChunkGenerator{
     				    	mat = Material.WOOL;
     				    }
     				        
-                   BlockFLB[t] = mat;    
-                   }
+                    BlockFLB[t] = mat;    
+                    }
+					}
 					
-                   if (tokens.length == 4){
+                    if (tokens.length == 4){
         				genMode = "grid2";
-                   }else if (tokens.length == 3){
+                    }else if (tokens.length == 3){
         				genMode = "grid";
-                   }else if (tokens.length == 2){
+                    }else if (tokens.length == 2){
         				genMode = "normal";
-                   }else{
+                    }else{
         				this.setDefaults("[FlatlandsBuilder] Invalid Settings provided, using defaults '64,wool:15,wool:7,wool:8'");
-                   }
+                    }
+ 
 				} 
 			}catch (Exception e){
 			log.severe("[FlatlandsBuilder] Error parsing FlatlandsBuilder Settings '" + id + "'. using defaults '64,wool:15,wool:7,wool:8': " + e.toString());
