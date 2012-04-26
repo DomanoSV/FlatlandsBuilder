@@ -15,21 +15,26 @@ public class FLBGenerator extends ChunkGenerator{
 	
 	private Logger log = Logger.getLogger("Minecraft");
 	private String genMode;
-	private int height;
+	private int height = 0;
 	private Material[] BlockFLB = new Material[3];
 	private byte[] BlockFLBDV = new byte[3];
 
-	public void setDefaults(String msg){
-        height = 64;
-        genMode = "grid2";
-        BlockFLB[0] = Material.WOOL;
-		BlockFLB[1] = Material.WOOL;
-		BlockFLB[2] = Material.WOOL;
-		BlockFLBDV[0] = (byte) 0xf;
-		BlockFLBDV[1] = (byte) 0x7;
+	public void setDefaults(String msg){        
+		genMode = "grid2";        
+		BlockFLB[0] = Material.WOOL;		
+		BlockFLB[1] = Material.WOOL;		
+		BlockFLB[2] = Material.WOOL;		
+		BlockFLBDV[0] = (byte) 0xf;		
+		BlockFLBDV[1] = (byte) 0x7;		
 		BlockFLBDV[2] = (byte) 0x8;
-		this.log.warning(msg);
-	}
+		
+		if (height != 0){		// Checks to see if a height variable is accepted by FlatlandsBuiler.
+			msg = "[FlatlandsBuilder] No Block Settings provided, using default blocks 'wool:15,wool:7,wool:8'";
+		}else{
+			height = 64;
+		} 
+			this.log.warning(msg);	
+	}	
 	
 	public FLBGenerator(){
 		this("64,wool:15,wool:7,wool:8");
@@ -40,18 +45,31 @@ public class FLBGenerator extends ChunkGenerator{
 			try{
                 if (id.length() > 0){
                     String tokens[] = id.split("[,]");
-					height = Integer.parseInt(tokens[0]);
+                    
+                    if (tokens.length > 4){			// Checks to see if a larger string has been provided, and adjusts accordingly.
+						String tokenStore[] = new String[4];
 					
-					if (height <= 0 || height >= 128){ // Will change max height later on, once sure 256 is the maximum value and not lower.
+						log.warning("[FlatlandsBuilder] The number of variables entered [" + tokens.length + "], is too many. Using first four.");
+
+							for (int tokenNumb = 0; tokenNumb < 4; tokenNumb ++){
+								tokenStore[tokenNumb] = tokens[tokenNumb];
+								}
+
+						tokens = tokenStore;
+						
+					}
+ 
+					height = Integer.parseInt(tokens[0]);		// Sets height variable.
+					
+					if (height <= 0 || height >= 128){		// May change max height later on, making it generate any higher seems impracticle at this stage.
 						log.warning("[FlatlandsBuilder] Invalid height '" + tokens[0] + "'. Using 64 instead.");
 						height = 64;
 					} 
-					
-					if (tokens.length >= 1 && tokens.length <= 4){
-					
-                    for (int i = 1; i < tokens.length; i ++){
+
+                    for (int i = 1; i < tokens.length; i ++){		// Sets blocks array in sequential order.    
                     	int t = i - 1;
-                        String materialTokens[] = tokens[i].split("[:]", 2);
+                    	
+                        String materialTokens[] = tokens[i].split("[:]", 2);		// Splits Block Type and Type ID into 2 so it can be parsed by the FlatlandsBuilder.
     				        
                         if (materialTokens.length == 2){
                         	try{
@@ -84,9 +102,8 @@ public class FLBGenerator extends ChunkGenerator{
     				        
                     BlockFLB[t] = mat;    
                     }
-					}
 					
-                    if (tokens.length == 4){
+                    if (tokens.length == 4){		// Sets generation format based on number of variables entered. 
         				genMode = "grid2";
                     }else if (tokens.length == 3){
         				genMode = "grid";
@@ -100,7 +117,7 @@ public class FLBGenerator extends ChunkGenerator{
 			}catch (Exception e){
 			log.severe("[FlatlandsBuilder] Error parsing FlatlandsBuilder Settings '" + id + "'. using defaults '64,wool:15,wool:7,wool:8': " + e.toString());
             e.printStackTrace();
-            height = 16;
+            height = 64;
             genMode = "grid2";
             BlockFLB[0] = Material.WOOL;
     		BlockFLB[1] = Material.WOOL;

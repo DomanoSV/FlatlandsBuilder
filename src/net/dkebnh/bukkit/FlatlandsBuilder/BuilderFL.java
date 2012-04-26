@@ -12,7 +12,7 @@ public class BuilderFL extends JavaPlugin {
 	
 	public void logMessage(String msg){
 		PluginDescriptionFile pdFile = this.getDescription();
-		this.log.info(pdFile.getName() + " " + pdFile.getVersion() + " - " + msg);
+		this.log.info("[FlatlandsBuilder] " + pdFile.getName() + " " + pdFile.getVersion() + " - " + msg);
 	}
 	
 	public void onEnable(){

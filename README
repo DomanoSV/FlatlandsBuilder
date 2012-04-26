@@ -1,4 +1,4 @@
-Flatlands Builder Version 0.6 Beta
+Flatlands Builder Version 0.6.2
 
 Hello this is a flatlands generator, best used with multiverse.
 works with CraftBukkit 1.2.5-R01
@@ -15,11 +15,14 @@ World sizes are not restricted.
 Only generates chunks as required.
 Supports arbitrary height worlds, max height of 128 blocks only at the moment.
 Supports data values of block ids by use of ':' between them ie. 'wool:8'. Numeric IDs only.
+Will accept height only config, will use plugin defaults for Blocks ID's.
 
 > To gen a flatlands world with multiverse:
+/mv create [WorldName] NORMAL -g FlatlandsBuilder:Height
 /mv create [WorldName] NORMAL -g FlatlandsBuilder:Height,FillBlock
 /mv create [WorldName] NORMAL -g FlatlandsBuilder:Height,FillBlock,BorderBlock
 /mv create [WorldName] NORMAL -g FlatlandsBuilder:Height,FillBlock,Border1Block,Border2Block
+ie.	/mv create [WorldName] NORMAL -g FlatlandsBuilder:24
 ie.	/mv create [WorldName] NORMAL -g FlatlandsBuilder:16,grass
 ie.	/mv create [WorldName] NORMAL -g FlatlandsBuilder:16,wool:15,wool:7
 ie.	/mv create [WorldName] NORMAL -g FlatlandsBuilder:16,wool:15,wool:7,wool:8
