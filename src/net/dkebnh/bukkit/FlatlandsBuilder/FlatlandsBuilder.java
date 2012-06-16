@@ -49,7 +49,7 @@ public class FlatlandsBuilder extends JavaPlugin {
 			vars[1] = "[FlatlandsBuilder] Default generation mode is: " + genMode;
 			vars[2] = "[FlatlandsBuilder] Default fill block is: " + block1;
 			vars[3] = "[FlatlandsBuilder] Default border 1 block is: " + block2;
-			vars[4] = "[FlatlandsBuilder] Default border 2 block is: " + blacklist.get(0);
+			vars[4] = "[FlatlandsBuilder] Default border 2 block is: " + block3;
 			
 			for(int s = 0; s < vars.length; s ++){
 				System.out.println(vars[s]);
