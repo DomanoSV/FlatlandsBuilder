@@ -1,7 +1,12 @@
 author: DomanoSV
 description: Flatlands world generator.
 name: FlatlandsBuilder
-version: 0.6.2
-main: net.dkebnh.bukkit.FlatlandsBuilder.BuilderFL
+version: 0.7.0-R2.0
+main: net.dkebnh.bukkit.FlatlandsBuilder.FlatlandsBuilder
 load: STARTUP
 url: http://www.dkebnh.net/
+commands:
+    flb:
+        description: Informs player of FlatlandsBuilder version.
+        usage: /flb help for more information.
+        aliases: [fb, flatlandsbuilder]

@@ -1,6 +1,7 @@
 package net.dkebnh.bukkit.FlatlandsBuilder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
@@ -8,6 +9,7 @@ import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World; 
+import org.bukkit.block.Biome;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 
@@ -15,12 +17,14 @@ public class FLBGenerator extends ChunkGenerator{
 	
 	private Logger log = Logger.getLogger("Minecraft");
 	private String genMode;
+	private String genModeParse;
 	private int height = 0;
 	private Material[] BlockFLB = new Material[3];
 	private byte[] BlockFLBDV = new byte[3];
-
+	private Biome BiomeFLB = Biome.PLAINS;	
+	
 	public void setDefaults(String msg){        
-		genMode = "grid2";        
+		genMode = "grid2";      
 		BlockFLB[0] = Material.WOOL;		
 		BlockFLB[1] = Material.WOOL;		
 		BlockFLB[2] = Material.WOOL;		
@@ -34,7 +38,7 @@ public class FLBGenerator extends ChunkGenerator{
 			height = 64;
 		} 
 			this.log.warning(msg);	
-	}	
+	}
 	
 	public FLBGenerator(){
 		this("64,wool:15,wool:7,wool:8");
@@ -43,8 +47,23 @@ public class FLBGenerator extends ChunkGenerator{
 	public FLBGenerator(String id){
 		if (id != null){
 			try{
-                if (id.length() > 0){
-                    String tokens[] = id.split("[,]");
+            	String[] parts = id.split("[;]");
+            	id = parts.length == 0 ? "" : parts[0];
+            	if(parts.length >= 2) {
+            		this.genModeParse = parts[1];
+            	}
+				
+        		List<String> genModechk = Arrays.asList("normal","grid","grid2","grid3","grid4","grid5");
+        		
+        		if (genModechk.contains(genModeParse)){
+        	        System.out.println(genModeParse);
+        		}else{
+        			genModeParse = null;
+        	        System.out.println(genModeParse);
+        		}
+            	
+                if (parts[0].length() > 0){
+                    String tokens[] = parts[0].split("[,]");
                     
                     if (tokens.length > 4){			// Checks to see if a larger string has been provided, and adjusts accordingly.
 						String tokenStore[] = new String[4];
@@ -61,7 +80,7 @@ public class FLBGenerator extends ChunkGenerator{
  
 					height = Integer.parseInt(tokens[0]);		// Sets height variable.
 					
-					if (height <= 0 || height >= 128){		// May change max height later on, making it generate any higher seems impracticle at this stage.
+					if (height <= 0 || height >= 128){		// May change max height later on, making it generate any higher seems impractical at this stage.
 						log.warning("[FlatlandsBuilder] Invalid height '" + tokens[0] + "'. Using 64 instead.");
 						height = 64;
 					} 
@@ -103,16 +122,48 @@ public class FLBGenerator extends ChunkGenerator{
                     BlockFLB[t] = mat;    
                     }
 					
-                    if (tokens.length == 4){		// Sets generation format based on number of variables entered. 
-        				genMode = "grid2";
-                    }else if (tokens.length == 3){
-        				genMode = "grid";
-                    }else if (tokens.length == 2){
-        				genMode = "normal";
-                    }else{
-        				this.setDefaults("[FlatlandsBuilder] Invalid Settings provided, using defaults '64,wool:15,wool:7,wool:8'");
+                	log.info(Integer.toString(tokens.length));
+                	if (tokens.length == 4){		// Sets generation format based on number of variables entered. 
+                		genMode = "grid2";
+                	}else if (tokens.length == 3){
+                		genMode = "grid";
+                	}else if (tokens.length == 2){
+                		genMode = "normal";
+                	}else{
+                		this.setDefaults("[FlatlandsBuilder] Invalid Settings provided, using defaults '64,wool:15,wool:7,wool:8'");
+                	}
+                    
+                    if (genModeParse != null){
+                    	log.warning("[FlatlandsBuilder] Generation mode selected. " + genModeParse);
+                    	if (tokens.length == 4){		// Sets generation format based on number of variables entered. 
+                    		
+                    		genMode = "grid2";
+                    		if(genModeParse.equalsIgnoreCase("grid5")){
+                    			log.warning("[FlatlandsBuilder] Special generation mode selected. " + genModeParse);
+                    			genMode = "grid5";
+                    		}else if(genModeParse.equalsIgnoreCase("grid4")){
+                    			log.warning("[FlatlandsBuilder] Special generation mode selected. " + genModeParse);
+                    			genMode = "grid4";
+                    		}else{
+                    			log.info("error");
+                    		}
+                    		
+                    	}else if (tokens.length == 3){
+                    		genMode = "grid";
+        				
+                    		if(genModeParse.equalsIgnoreCase("grid3")){
+                    			log.warning("[FlatlandsBuilder] Special generation mode selected. " + genModeParse);
+                    			genMode = "grid3";
+                    		}else{
+                    			log.info("error2");
+                    		}
+                    		
+                    	}else if (tokens.length == 2){
+        						genMode = "normal";
+                    	}else{
+                    		this.setDefaults("[FlatlandsBuilder] 23 Invalid Settings provided, using defaults '64,wool:15,wool:7,wool:8'");
+                    	}
                     }
- 
 				} 
 			}catch (Exception e){
 			log.severe("[FlatlandsBuilder] Error parsing FlatlandsBuilder Settings '" + id + "'. using defaults '64,wool:15,wool:7,wool:8': " + e.toString());
@@ -155,11 +206,11 @@ public class FLBGenerator extends ChunkGenerator{
 		for (x = 0; x < 16; ++x){
 			for (z = 0; z < 16; ++z){
 				blocks[this.coordsToInt(x, 0, z)] = (byte) Material.BEDROCK.getId();
-				
 				for (y = 1; y < height; ++y){
 					blocks[this.coordsToInt(x, y, z)] = (byte) Material.STONE.getId();
 				}
 				blocks[this.coordsToInt(x, height, z)] = (byte) Material.WOOL.getId();
+				world.setBiome(x, z, BiomeFLB);
 			}
 		}
 		return blocks;
