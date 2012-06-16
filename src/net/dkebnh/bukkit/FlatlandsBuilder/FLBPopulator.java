@@ -24,10 +24,9 @@ public class FLBPopulator extends BlockPopulator {
     
 	public void populate(World world, Random random, Chunk chunk) {
 		int blockx, blockz, blockx2, blockz2;
+    	int chunkx = chunk.getX();
+    	int chunkz = chunk.getZ();
 		Block block;
-		
-		int chunkx = chunk.getX();
-		int chunkz = chunk.getZ();
        
         if(genMode == "normal" || genMode == null){
         	for(blockx2 = 0; blockx2 < 16; ++blockx2){
@@ -38,63 +37,51 @@ public class FLBPopulator extends BlockPopulator {
 				}
         	}
         }else if(genMode == "grid"){
-        	for(blockx2 = 0; blockx2 < 16; ++blockx2){
-        		for(blockz2 = 0; blockz2 < 16; ++blockz2){
-        			block = chunk.getBlock(blockx2, height, blockz2);	
-        			block.setType(BlockFLB[1]);
-        			block.setData(BlockFLBDV[1]);
-				}
-        	}
-        	for (blockx = 1; blockx < 15; ++blockx){
-        		for (blockz = 1; blockz < 15; ++blockz){
-        			block = chunk.getBlock(blockx, height, blockz);
-        			block.setType(BlockFLB[0]);
-        			block.setData(BlockFLBDV[0]);
-				}
+        	for(blockx = 0; blockx < 16; ++blockx){
+        		for (blockz = 0; blockz < 16; ++blockz){
+        			if (blockx == 0 || blockx == 15 || blockz == 0 || blockz == 15){
+        				block = chunk.getBlock(blockx, height, blockz);
+        			   	block.setType(BlockFLB[1]);
+        		    	block.setData(BlockFLBDV[1]);
+        			}else{
+        				block = chunk.getBlock(blockx, height, blockz);
+    					block.setType(BlockFLB[0]);
+    					block.setData(BlockFLBDV[0]);
+        			}
+        		}		
         	}
         }else if(genMode == "grid2"){
-			if((chunkx + chunkz) % 2 == 0) {
-		        for(blockx2 = 0; blockx2 < 16; ++blockx2){
-		        	for(blockz2 = 0; blockz2 < 16; ++blockz2){
-		        		block = chunk.getBlock(blockx2, height, blockz2);	
-	        			block.setType(BlockFLB[1]);
-	        			block.setData(BlockFLBDV[1]);
-					}
-		        }
-        	}else{
-		        for(blockx2 = 0; blockx2 < 16; ++blockx2){
-		        	for(blockz2 = 0; blockz2 < 16; ++blockz2){
-		        		block = chunk.getBlock(blockx2, height, blockz2);	
-	        			block.setType(BlockFLB[2]);
-	        			block.setData(BlockFLBDV[2]);
-					}
-		        }
-        	} 
-			for(blockx = 1; blockx < 15; ++blockx){
-        		for(blockz = 1; blockz < 15; ++blockz){
-        			block = chunk.getBlock(blockx, height, blockz);
-        			block.setType(BlockFLB[0]);
-        			block.setData(BlockFLBDV[0]);
-				}
+        	for(blockx = 0; blockx < 16; ++blockx){
+        		for (blockz = 0; blockz < 16; ++blockz){
+        			if (blockx == 0 || blockx == 15 || blockz == 0 || blockz == 15){
+        				block = chunk.getBlock(blockx, height, blockz);
+        				if((chunkx + chunkz) % 2 == 0) {
+        			   		block.setType(BlockFLB[1]);
+        		    		block.setData(BlockFLBDV[1]);
+        		    	}else{
+        		    		block.setType(BlockFLB[2]);
+        		    		block.setData(BlockFLBDV[2]);
+        		    	}
+        			}else{
+        				block = chunk.getBlock(blockx, height, blockz);
+    					block.setType(BlockFLB[0]);
+    					block.setData(BlockFLBDV[0]);
+        			}
+        		}		
         	}
 		}else if(genMode == "grid3"){
-			if((chunkx + chunkz) % 2 == 0) {
-		        for(blockx2 = 0; blockx2 < 16; ++blockx2){
-		        	for(blockz2 = 0; blockz2 < 16; ++blockz2){
-		        		block = chunk.getBlock(blockx2, height, blockz2);	
-	        			block.setType(BlockFLB[1]);
-	        			block.setData(BlockFLBDV[1]);
-					}
-		        }
-        	}else{
-		        for(blockx2 = 0; blockx2 < 16; ++blockx2){
-		        	for(blockz2 = 0; blockz2 < 16; ++blockz2){
-		        		block = chunk.getBlock(blockx2, height, blockz2);	
-	        			block.setType(BlockFLB[0]);
-	        			block.setData(BlockFLBDV[0]);
-					}
-		        }
-        	} 
+	    	for(blockx = 0; blockx < 16; ++blockx){
+	    		for (blockz = 0; blockz < 16; ++blockz){
+	    				block = chunk.getBlock(blockx, height, blockz);
+	    				if((chunkx + chunkz) % 2 == 0) {
+	    			   		block.setType(BlockFLB[1]);
+	    		    		block.setData(BlockFLBDV[1]);
+	    		    	}else{
+	    		    		block.setType(BlockFLB[0]);
+	    		    		block.setData(BlockFLBDV[0]);
+	    		    	}
+	    		}		
+	    	}
 		}else if(genMode == "grid4"){
 			if((chunkx + chunkz) % 2 == 0) {
 		        for(blockx2 = 0; blockx2 < 16; ++blockx2){
@@ -105,47 +92,38 @@ public class FLBPopulator extends BlockPopulator {
 					}
 		        }
         	}else{
-		        for(blockx2 = 0; blockx2 < 16; ++blockx2){
-		        	for(blockz2 = 0; blockz2 < 16; ++blockz2){
-		        		block = chunk.getBlock(blockx2, height, blockz2);	
-	        			block.setType(BlockFLB[2]);
-	        			block.setData(BlockFLBDV[2]);
-					}
-		        }
-		        
-		        for(blockx = 1; blockx < 15; ++blockx){
-	        		for(blockz = 1; blockz < 15; ++blockz){
-	        			block = chunk.getBlock(blockx, height, blockz);
-	        			block.setType(BlockFLB[0]);
-	        			block.setData(BlockFLBDV[0]);
-					}
-	        	}
+        		for(blockx = 0; blockx < 16; ++blockx){
+            		for (blockz = 0; blockz < 16; ++blockz){
+            			if (blockx == 0 || blockx == 15 || blockz == 0 || blockz == 15){
+            				block = chunk.getBlock(blockx, height, blockz);
+            			   	block.setType(BlockFLB[2]);
+            		    	block.setData(BlockFLBDV[2]);
+            			}else{
+            				block = chunk.getBlock(blockx, height, blockz);
+        					block.setType(BlockFLB[0]);
+        					block.setData(BlockFLBDV[0]);
+            			}
+            		}		
+            	}
         	} 
 		}else if(genMode == "grid5"){
-        	for(blockx2 = 0; blockx2 < 16; ++blockx2){
-        		for(blockz2 = 0; blockz2 < 16; ++blockz2){
-        			block = chunk.getBlock(blockx2, height, blockz2);	
-        			block.setType(BlockFLB[1]);
-        			block.setData(BlockFLBDV[1]);
-				}
-        	}
-
-			if((chunkx + chunkz) % 2 == 0) {
-	        	for (blockx = 1; blockx < 15; ++blockx){
-	        		for (blockz = 1; blockz < 15; ++blockz){
-	        			block = chunk.getBlock(blockx, height, blockz);
-	        			block.setType(BlockFLB[0]);
-	        			block.setData(BlockFLBDV[0]);
-					}
-	        	}
-        	}else{
-            	for (blockx = 1; blockx < 15; ++blockx){
-            		for (blockz = 1; blockz < 15; ++blockz){
-            			block = chunk.getBlock(blockx, height, blockz);
-            			block.setType(BlockFLB[2]);
-            			block.setData(BlockFLBDV[2]);
-    				}
-            	}
+        	for(blockx = 0; blockx < 16; ++blockx){
+        		for (blockz = 0; blockz < 16; ++blockz){
+        			if (blockx == 0 || blockx == 15 || blockz == 0 || blockz == 15){
+        				block = chunk.getBlock(blockx, height, blockz);
+    			   		block.setType(BlockFLB[1]);
+    		    		block.setData(BlockFLBDV[1]);
+        			}else{
+        				block = chunk.getBlock(blockx, height, blockz);
+        				if((chunkx + chunkz) % 2 == 0) {
+        			   		block.setType(BlockFLB[0]);
+        		    		block.setData(BlockFLBDV[0]);
+        		    	}else{
+        		    		block.setType(BlockFLB[2]);
+        		    		block.setData(BlockFLBDV[2]);
+        		    	}
+        			}
+        		}		
         	}
 		}
     }

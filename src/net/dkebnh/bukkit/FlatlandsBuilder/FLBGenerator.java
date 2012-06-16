@@ -52,14 +52,15 @@ public class FLBGenerator extends ChunkGenerator{
             	if(parts.length >= 2) {
             		this.genModeParse = parts[1];
             	}
+            	
+            	
 				
         		List<String> genModechk = Arrays.asList("normal","grid","grid2","grid3","grid4","grid5");
         		
         		if (genModechk.contains(genModeParse)){
-        	        System.out.println(genModeParse);
+        			log.info("[FlatlandsBuilder] Generation Mode " + genModeParse);
         		}else{
         			genModeParse = null;
-        	        System.out.println(genModeParse);
         		}
             	
                 if (parts[0].length() > 0){
@@ -118,11 +119,10 @@ public class FLBGenerator extends ChunkGenerator{
     				    	log.warning("[FlatlandsBuilder] Error, Block'" + materialTokens[0] + "' is not a block. Defaulting to WHITE_WOOL.");
     				    	mat = Material.WOOL;
     				    }
-    				        
+       
                     BlockFLB[t] = mat;    
                     }
 					
-                	log.info(Integer.toString(tokens.length));
                 	if (tokens.length == 4){		// Sets generation format based on number of variables entered. 
                 		genMode = "grid2";
                 	}else if (tokens.length == 3){
@@ -134,34 +134,24 @@ public class FLBGenerator extends ChunkGenerator{
                 	}
                     
                     if (genModeParse != null){
-                    	log.warning("[FlatlandsBuilder] Generation mode selected. " + genModeParse);
-                    	if (tokens.length == 4){		// Sets generation format based on number of variables entered. 
-                    		
-                    		genMode = "grid2";
+                    	if (tokens.length == 4){		// Sets generation format based on number of variables entered.
                     		if(genModeParse.equalsIgnoreCase("grid5")){
-                    			log.warning("[FlatlandsBuilder] Special generation mode selected. " + genModeParse);
                     			genMode = "grid5";
                     		}else if(genModeParse.equalsIgnoreCase("grid4")){
-                    			log.warning("[FlatlandsBuilder] Special generation mode selected. " + genModeParse);
                     			genMode = "grid4";
                     		}else{
-                    			log.info("error");
+                    			genMode = "grid2";
                     		}
-                    		
                     	}else if (tokens.length == 3){
-                    		genMode = "grid";
-        				
                     		if(genModeParse.equalsIgnoreCase("grid3")){
-                    			log.warning("[FlatlandsBuilder] Special generation mode selected. " + genModeParse);
                     			genMode = "grid3";
                     		}else{
-                    			log.info("error2");
+                    			genMode = "grid";
                     		}
-                    		
                     	}else if (tokens.length == 2){
         						genMode = "normal";
                     	}else{
-                    		this.setDefaults("[FlatlandsBuilder] 23 Invalid Settings provided, using defaults '64,wool:15,wool:7,wool:8'");
+                    		this.setDefaults("[FlatlandsBuilder] Invalid Settings provided, using defaults '64,wool:15,wool:7,wool:8'");
                     	}
                     }
 				} 
