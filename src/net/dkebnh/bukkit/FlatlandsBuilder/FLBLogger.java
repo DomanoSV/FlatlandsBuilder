@@ -19,6 +19,10 @@ public class FLBLogger {
 		return "[" + pdFile.getName() + "] " + message;
 	}
 	
+	public void infoMSGNullFormat(String message){
+		this.log.info(message);
+	}
+	
 	public void infoMSG(String message){
 		this.log.info(this.FormatMessage(message));
 	}
