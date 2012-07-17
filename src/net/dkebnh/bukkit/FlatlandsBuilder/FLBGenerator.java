@@ -101,9 +101,9 @@ public class FLBGenerator extends ChunkGenerator{
 				}
 			}catch (Exception e){
 				e.printStackTrace();
-				this.height = 64;
+				this.height = 64;	
 			}
-
+			
 			try{	// Trys to get the generation mode value for the generator.
 				if(plugin.conf.contains("worlds." + worldName + ".mode")){
 					mode = plugin.conf.getString("worlds." + worldName + ".mode");

@@ -21,13 +21,13 @@ public class FLBPlayerLoginListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event){
 		Player player = event.getPlayer();
 		String playerName = player.getName();
-		String stepName = null, stepCommand = null, worldName = null;
 		
 		if (plugin.wizardRunning == true){
 			if (player.hasPermission("flatlandsbuilder.notify")){
 				player.sendMessage(ChatColor.WHITE + "Hello " + ChatColor.GREEN + playerName + ChatColor.WHITE + ", it appears the FlatlandsBuilder command");	
-				player.sendMessage(ChatColor.WHITE + "wizard is still running to continue configuring " + ChatColor.GREEN + worldName);				
-				player.sendMessage(ChatColor.WHITE + "please set "+ ChatColor.GREEN + stepName + ChatColor.WHITE + " by using the command " + ChatColor.GREEN + stepCommand);
+				player.sendMessage(ChatColor.WHITE + "wizard is still running to continue configuring " + ChatColor.GREEN + plugin.wizardWorld);				
+				player.sendMessage(ChatColor.WHITE + "please set "+ ChatColor.GREEN + plugin.stepName.get(plugin.wizardStage) + ChatColor.WHITE + " by using the command:");
+				player.sendMessage(ChatColor.GREEN + "  - " + plugin.stepCommand.get(plugin.wizardStage));
 			}	
 		}
 	}

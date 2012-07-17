@@ -1,6 +1,7 @@
 package net.dkebnh.bukkit.FlatlandsBuilder;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -16,23 +17,27 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class FlatlandsBuilder extends JavaPlugin {
 	
-	public FLBLogger log;
-	
 	private File confFile, saveWizard;
+	
 	public YamlConfiguration conf, wizard;
-	public boolean plotsEnabled = false;
+	public FLBLogger log;
 	public boolean wizardRunning = false;
 	public int wizardStage = 0;
+	public String wizardWorld = null;
+	public List<String> stepName = Arrays.asList("Wizard Not Running","Defaults or Height","Generation Mode","BlockA","BlockB","BlockC","Enable Plots","Plots Size","Path Block","Wall Block","Complete");
+	public List<String> stepCommand = Arrays.asList("null","/flbw usedefaults or /flbw height <int>","/flbw mode <mode>","/flbw block1 <block>","/flbw block2 <block>","/flbw block3 <block>","/flbw plots <true/false>","/flbw plotsize <int>","/flbw pathblock <block>","/flbw wallblock <block>", "/flbw done");
+	
 	int height = 64;
-	int plotSize = 64;
 	String genMode = "grid2";
 	String block1 = "wool:15";
 	String block2 = "wool:7";
 	String block3 = "wool:8";
+	boolean plotsEnabled = false;
+	int plotSize = 64;
 	String pathBlock = "wool";
 	String wallBlock = "wool:3";
 	List<String> blacklist = Arrays.asList("lava","water","tnt","bedrock");
-	
+
     public void onEnable(){
 		this.log = new FLBLogger(this);
 		
@@ -73,6 +78,9 @@ public class FlatlandsBuilder extends JavaPlugin {
 			wizard = YamlConfiguration.loadConfiguration(saveWizard);
 			wizardRunning = wizard.getBoolean("global.wizardRunning");   	
 			wizardStage = wizard.getInt("global.wizardStage"); 
+			if(wizard.contains("wizard.isConfiguring")){
+				wizardWorld = wizard.getString("wizard.isConfiguring"); 
+			}
 		}else{
 			wizard = new YamlConfiguration();        	
 			wizard.set("global.wizardRunning", false);   	
@@ -95,6 +103,7 @@ public class FlatlandsBuilder extends JavaPlugin {
 			log.infoMSGNullFormat("  - " + blacklist.get(i));
 		}
 		
+		if(wizardRunning)log.infoMSG("Command Wizard is still running, please finish configuring " + wizardWorld + ", wizard is up to step " + stepName.get(wizardStage));
 		log.infoMSG("Done, continuing to load bukkit ...");
 		
 		this.getCommand("flb").setExecutor(new PluginCommands(this));
@@ -108,6 +117,57 @@ public class FlatlandsBuilder extends JavaPlugin {
 		this.wizard = null;
 		this.conf = null;
 		this.log = null;
+	}
+	
+	public boolean reloadAll(){
+		conf = new YamlConfiguration();
+		wizard = new YamlConfiguration();
+		
+		try {
+			conf.load(confFile);
+			plotsEnabled = conf.getBoolean("global.defaults.plots");   	
+			plotSize = conf.getInt("global.defaults.plotsize");  
+			height = conf.getInt("global.defaults.height");       
+			genMode = conf.getString("global.defaults.mode"); 
+			block1 = conf.getString("global.defaults.block1");        	
+			block2 = conf.getString("global.defaults.block2");     
+			block3 = conf.getString("global.defaults.block3");
+			pathBlock = conf.getString("global.defaults.pathblock");     
+			wallBlock = conf.getString("global.defaults.wallblock");
+			blacklist = conf.getStringList("global.blacklist");
+
+			wizard.load(saveWizard);
+			wizardRunning = wizard.getBoolean("global.wizardRunning");   	
+			wizardStage = wizard.getInt("global.wizardStage"); 
+			if(wizard.contains("wizard.isConfiguring")){
+				wizardWorld = wizard.getString("wizard.isConfiguring"); 
+			}
+			
+			log.infoMSG("Reloading configuration, please wait...");
+			log.infoMSG("Default height is: " + Integer.toString(height));
+			log.infoMSG("Default generation mode is: " + genMode);
+			log.infoMSG("Default BlockA is: " + block1);
+			log.infoMSG("Default BlockB is: " + block2);
+			log.infoMSG("Default BlockC is: " + block3);
+			log.infoMSG("Default for plots enabled is: " + plotsEnabled);
+			log.infoMSG("Default plot size is: " + plotSize);
+			log.infoMSG("Default road block is: " + pathBlock);
+			log.infoMSG("Default wall block is: " + wallBlock);
+			log.infoMSG("Loading blacklist, please wait...");
+			
+			for(int i = 0; i < blacklist.size(); i ++){
+				log.infoMSGNullFormat("  - " + blacklist.get(i));
+			}
+			
+			if(wizardRunning)log.infoMSG("Command Wizard is still running, please finish configuring " + wizardWorld + ", wizard is up to step " + stepName.get(wizardStage));
+			log.infoMSG("Done.");
+			return true;
+		} catch (FileNotFoundException e) {
+			// do nothing
+		} catch (Throwable e) {
+			throw new IllegalStateException("Error loading permissions file", e);
+		}
+		return false;
 	}
 	
 	public boolean saveSettings() {

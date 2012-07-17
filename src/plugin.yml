@@ -1,5 +1,5 @@
 author: DomanoSV
-description: Flatlands world generator.
+description: All new FlatlandsBuilder flatlands world generator.
 name: FlatlandsBuilder
 version: 0.8.0-R1.0
 main: net.dkebnh.bukkit.FlatlandsBuilder.FlatlandsBuilder
@@ -7,14 +7,14 @@ load: STARTUP
 url: http://www.dkebnh.net/
 commands:
     flb:
-        description: Informs player of FlatlandsBuilder version.
+        description: Default plugin commands.
         usage: /flb help for more information.
         aliases: [fb]
-    flbe:
-        description: Informs player of FlatlandsBuilder version.
-        usage: /flb help for more information.
-        aliases: [fbe]
+    flbd:
+        description: Sets plugin default configuration settings.
+        usage: /flbd help for more information.
+        aliases: [fbd]
     flbw:
-        description: Informs player of FlatlandsBuilder version.
-        usage: /flb help for more information.
+        description: Plugin Command Wizzard.
+        usage: /flbw help for more information.
         aliases: [fbw]
