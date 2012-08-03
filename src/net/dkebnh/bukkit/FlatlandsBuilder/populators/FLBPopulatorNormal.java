@@ -18,7 +18,7 @@ public class FLBPopulatorNormal extends BlockPopulator {
 	private byte pathID = (byte) 0x0;
 	private int plotSize;
 	private boolean plotsEnabled;
-	
+
     public FLBPopulatorNormal(int height, Material[] BlockFLB, byte[] BlockFLBDV, Material[] PathFLB, byte[] PathFLBDV, boolean plotsEnabled, int plotSize){
         this.height = height;
         this.BlockFLB = BlockFLB;

@@ -130,7 +130,7 @@ public class EditCommands implements CommandExecutor{
 						try{
 							String modeSelect = args[1].toLowerCase();
 			        		
-							List<String> genModechk = Arrays.asList("normal","grid","grid2","grid3","grid4","grid5","schematic");
+							List<String> genModechk = Arrays.asList("normal","grid","grid2","grid3","grid4","grid5");
 			        		
 			        		if (genModechk.contains(modeSelect)){
 								sender.sendMessage(ChatColor.GREEN + "[FlatlandsBuilder] " + ChatColor.WHITE + "New Generation Mode '" + modeSelect + "' set.");

@@ -36,7 +36,7 @@ public class FlatlandsBuilder extends JavaPlugin {
 	int plotSize = 64;
 	String pathBlock = "wool";
 	String wallBlock = "wool:3";
-	List<String> blacklist = Arrays.asList("lava","water","tnt","bedrock");
+	List<String> blacklist = Arrays.asList("lava","water","tnt","bedrock","fire");
 
     public void onEnable(){
 		this.log = new FLBLogger(this);
@@ -107,7 +107,7 @@ public class FlatlandsBuilder extends JavaPlugin {
 		log.infoMSG("Done, continuing to load bukkit ...");
 		
 		this.getCommand("flb").setExecutor(new PluginCommands(this));
-		this.getCommand("flbe").setExecutor(new EditCommands(this));
+		this.getCommand("flbd").setExecutor(new EditCommands(this));
 		this.getCommand("flbw").setExecutor(new CommandWizard(this));
 		this.getServer().getPluginManager().registerEvents(new FLBPlayerLoginListener(this), this);
 	}
@@ -165,7 +165,7 @@ public class FlatlandsBuilder extends JavaPlugin {
 		} catch (FileNotFoundException e) {
 			// do nothing
 		} catch (Throwable e) {
-			throw new IllegalStateException("Error loading permissions file", e);
+			throw new IllegalStateException("Error loading configuration files.", e);
 		}
 		return false;
 	}
@@ -272,7 +272,7 @@ public class FlatlandsBuilder extends JavaPlugin {
                 this.conf.set("worlds." + worldName + ".mode", idmode);
                 this.conf.set("worlds." + worldName + ".plots", plotsold);
                 saveSettings();
-                log.infoMSG("Done. Generating new world, please wait...");
+                log.infoMSG("Done. Saved world settings to configuration file. Continuing to load bukkit, please wait...");
     		}
 		}
 		

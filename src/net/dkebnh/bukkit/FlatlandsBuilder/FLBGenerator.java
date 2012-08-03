@@ -22,14 +22,14 @@ import org.bukkit.generator.ChunkGenerator;
 public class FLBGenerator extends ChunkGenerator{
 	
 	private Logger log = Logger.getLogger("Minecraft");
-	private int height = 0;
+	private int height;
 	private String genMode;
 	private Material[] BlockFLB = new Material[3];
 	private byte[] BlockFLBDV = new byte[3];
 	private Material[] PathFLB = new Material[2];
 	private byte[] PathFLBDV = new byte[2];
 	public boolean plotsEnabled = true;
-	private int plotSize = 128 + 16;
+	private int plotSize = 128 + 16;	
 	
 	private List<String> genModechk = Arrays.asList("normal","grid","grid2","grid3","grid4","grid5");
 	private List<Integer> plotSizechk = Arrays.asList(64,128,256,512,1024);
@@ -75,6 +75,10 @@ public class FLBGenerator extends ChunkGenerator{
 	
 	public int getPlotSize(){
 		return this.plotSize - 16;
+	}
+	
+	public int getFLHeight(){
+		return this.height;
 	}
 	
 	public FLBGenerator(FlatlandsBuilder plugin, String worldName){
