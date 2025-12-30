@@ -275,23 +275,27 @@ public class FLBGenerator extends ChunkGenerator{
 		return new Location(world, 0, height + 1, 0);
 	}
 	
-	private int coordsToInt(int x, int y, int z){
-			return (x * 16 + z) * 256 + y;
+	public int coordsToByte(int x, int y, int z){
+		return (x * 16 + z) * 128 + y;
 	}
 	
-	public byte[] generate(World world, Random rand, int chunkx, int chunkz){
-		byte[] blocks = new byte[65536];
-		int x, y, z;
-		
-		for (x = 0; x < 16; ++x){
-			for (z = 0; z < 16; ++z){
-				blocks[this.coordsToInt(x, 0, z)] = (byte) Material.BEDROCK.getId();
-				for (y = 1; y < height; ++y){
-					blocks[this.coordsToInt(x, y, z)] = (byte) Material.STONE.getId();
+	private void setBlockAt(byte[][] chunk, int x, int y, int z, byte typeId){
+		chunk[y >> 4][((y & 0xF) << 8) | (z << 4) | x] = typeId;
+	}
+
+	@Override
+	public byte[][] generateBlockSections(World world, Random random, int chunkX, int chunkZ, BiomeGrid biomes){
+		byte[][] chunk = new byte[(int) Math.ceil((this.height + 2.0d) / 16)][4096];
+
+		for (int x = 0; x < 16; ++x){
+			for (int z = 0; z < 16; ++z){
+				this.setBlockAt(chunk, x, 0, z, (byte) Material.BEDROCK.getId());
+				for (int y = 1; y < height; ++y){
+					this.setBlockAt(chunk, x, y, z, (byte) Material.STONE.getId());
 				}
-				blocks[this.coordsToInt(x, height, z)] = (byte) Material.WOOL.getId();
+				this.setBlockAt(chunk, x, height, z, (byte) Material.WOOL.getId());
 			}
 		}
-		return blocks;
+		return chunk;
 	}
 }
