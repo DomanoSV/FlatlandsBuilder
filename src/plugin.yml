@@ -1,7 +1,7 @@
 author: DomanoSV
 description: All new FlatlandsBuilder flatlands world generator.
 name: FlatlandsBuilder
-version: 0.8.0-R1.0
+version: 0.8.5-R2.0
 main: net.dkebnh.bukkit.FlatlandsBuilder.FlatlandsBuilder
 load: STARTUP
 url: http://www.dkebnh.net/
